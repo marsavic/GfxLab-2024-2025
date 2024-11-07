@@ -126,11 +126,11 @@ public class Vec3 {
 	
 	@Override
 	public int hashCode() {
-		long temp =
-				Double.doubleToLongBits(x) +
-						31 * Double.doubleToLongBits(y) +
-						997 * Double.doubleToLongBits(z);
-		return (int) (temp ^ (temp >>> 32));
+		return Long.hashCode(
+				      Double.doubleToLongBits(x) +
+				 31 * Double.doubleToLongBits(y) +
+				997 * Double.doubleToLongBits(z)
+		);
 	}
 	
 	public Vec3 add(Vec3 o) {

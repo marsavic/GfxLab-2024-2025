@@ -6,6 +6,7 @@ import xyz.marsavic.gfxlab.*;
 import xyz.marsavic.gfxlab.aggregation.AggregatorFrameLast;
 import xyz.marsavic.gfxlab.aggregation.AggregatorOnDemand;
 import xyz.marsavic.gfxlab.aggregation.AggregatorOneAhead;
+import xyz.marsavic.gfxlab.graphics3d.raytracers.RayTracerTest;
 import xyz.marsavic.gfxlab.playground.colorfunctions.*;
 import xyz.marsavic.gfxlab.tonemapping.colortransforms.*;
 import xyz.marsavic.gfxlab.tonemapping.matrixcolor_to_colortransforms.*;
@@ -23,8 +24,33 @@ public class GfxLab {
 	
 	
 	public GfxLab() {
-		setup2D();
+//		setup2D();
+		setupRaytracing();
 	}
+	
+	
+	private void setupRaytracing() {
+		//                       nFrames   width     height
+		var eSize = e(Vec3::new, e(1.0), e(640.0), e(640.0));
+		
+		sink =
+				e(Fs::frFrameToneMapping,
+						new EAggregator(
+								e(AggregatorFrameLast::new),
+								e(Fs::transformedColorFunction,
+										e(RayTracerTest::new),
+										e(TransformationsFromSize.toGeometric, eSize)
+								),
+								eSize,
+								e(0xA6A08E5C173D29FL)
+						),
+						e(Fs::frToneMapping,
+								e(ColorTransform::asColorTransformFromMatrixColor, e(new Identity()))
+//								e(AutoSoft::new, e(0x1p-4), e(1.0))
+						)
+				);
+	}
+	
 	
 	private void setup2D() {
 		//                       nFrames   width     height

@@ -16,7 +16,7 @@ import xyz.marsavic.objectinstruments.instruments.InstrumentText;
 public class App extends Application {
 	
 	static {
-		System.setProperty("prism.forceGPU=true", "true");
+		System.setProperty("prism.forceGPU", "true");
 	}
 	
 	
