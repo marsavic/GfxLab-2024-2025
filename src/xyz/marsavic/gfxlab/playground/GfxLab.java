@@ -5,14 +5,14 @@ import xyz.marsavic.functions.F1;
 import xyz.marsavic.gfxlab.*;
 import xyz.marsavic.gfxlab.aggregation.AggregatorFrameLast;
 import xyz.marsavic.gfxlab.aggregation.AggregatorOnDemand;
-import xyz.marsavic.gfxlab.aggregation.AggregatorOneAhead;
-import xyz.marsavic.gfxlab.graphics3d.raytracers.RayTracerTest;
-import xyz.marsavic.gfxlab.playground.colorfunctions.*;
-import xyz.marsavic.gfxlab.tonemapping.colortransforms.*;
-import xyz.marsavic.gfxlab.tonemapping.matrixcolor_to_colortransforms.*;
 import xyz.marsavic.gfxlab.aggregation.EAggregator;
+import xyz.marsavic.gfxlab.graphics3d.raytracers.RayTracerSimple;
+import xyz.marsavic.gfxlab.graphics3d.scenes.SceneTest1;
 import xyz.marsavic.gfxlab.gui.UtilsGL;
+import xyz.marsavic.gfxlab.playground.colorfunctions.Blobs;
 import xyz.marsavic.gfxlab.tonemapping.ColorTransform;
+import xyz.marsavic.gfxlab.tonemapping.colortransforms.Identity;
+import xyz.marsavic.gfxlab.tonemapping.matrixcolor_to_colortransforms.AutoSoft;
 import xyz.marsavic.resources.Resource;
 
 import static xyz.marsavic.elements.ElementF.e;
@@ -38,15 +38,17 @@ public class GfxLab {
 						new EAggregator(
 								e(AggregatorFrameLast::new),
 								e(Fs::transformedColorFunction,
-										e(RayTracerTest::new),
+										e(RayTracerSimple::new,
+												e(SceneTest1::new)												
+										),
 										e(TransformationsFromSize.toGeometric, eSize)
 								),
 								eSize,
 								e(0xA6A08E5C173D29FL)
 						),
 						e(Fs::frToneMapping,
-								e(ColorTransform::asColorTransformFromMatrixColor, e(new Identity()))
-//								e(AutoSoft::new, e(0x1p-4), e(1.0))
+//								e(ColorTransform::asColorTransformFromMatrixColor, e(new Identity()))
+								e(AutoSoft::new, e(0x1p-4), e(1.0))
 						)
 				);
 	}

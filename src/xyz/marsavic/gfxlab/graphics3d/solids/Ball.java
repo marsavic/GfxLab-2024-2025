@@ -1,29 +1,39 @@
 package xyz.marsavic.gfxlab.graphics3d.solids;
 
+import xyz.marsavic.functions.F1;
+import xyz.marsavic.geometry.Vector;
 import xyz.marsavic.gfxlab.Vec3;
 import xyz.marsavic.gfxlab.graphics3d.Hit;
+import xyz.marsavic.gfxlab.graphics3d.Material;
 import xyz.marsavic.gfxlab.graphics3d.Ray;
 import xyz.marsavic.gfxlab.graphics3d.Solid;
+import xyz.marsavic.utils.Numeric;
 
 
 public class Ball implements Solid {
 	
 	private final Vec3 c;
 	private final double r;
+	private final F1<Material, Vector> mapMaterial;
 	
 	// transient
 	private final double rSqr;
 	
 	
 	/** Negative r will make the ball inverted (the resulting solid is a complement of a ball). */
-	private Ball(Vec3 c, double r) {
+	private Ball(Vec3 c, double r, F1<Material, Vector> mapMaterial) {
 		this.c = c;
 		this.r = r;
 		rSqr = r * r;
+		this.mapMaterial = mapMaterial;
+	}
+	
+	public static Ball cr(Vec3 c, double r, F1<Material, Vector> mapMaterial) {
+		return new Ball(c, r, mapMaterial);
 	}
 	
 	public static Ball cr(Vec3 c, double r) {
-		return new Ball(c, r);
+		return cr(c, r, Material.DEFAULT);
 	}
 	
 	
@@ -69,6 +79,19 @@ public class Ball implements Solid {
 			return n().div(r);
 		}
 		
+		@Override
+		public Vector uv() {
+			Vec3 n = n();
+			return new Vector(
+					Numeric.atan2T(n.z(), n.x()), // [0..1]
+					4 * Numeric.asinT(n.y() / r)  // [-1..1]
+			);
+		}
+		
+		@Override
+		public Material material() {
+			return mapMaterial.at(uv());
+		}
 	}
 	
 }
