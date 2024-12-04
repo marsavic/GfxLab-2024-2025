@@ -38,10 +38,11 @@ public interface Transformation extends F1<Vec3, Vec3> {
 		// ?
 		final double eps = 0x1p-16;
 		
+		Vec3 a = at(p);
 		return Affine.unitVectors(
-				(at(p.add(Vec3.EX.mul(eps))).sub(at(p))).div(eps),
-				(at(p.add(Vec3.EY.mul(eps))).sub(at(p))).div(eps),
-				(at(p.add(Vec3.EZ.mul(eps))).sub(at(p))).div(eps)
+				(at(p.add(Vec3.EX.mul(eps))).sub(a)).div(eps),
+				(at(p.add(Vec3.EY.mul(eps))).sub(a)).div(eps),
+				(at(p.add(Vec3.EZ.mul(eps))).sub(a)).div(eps)
 		);
 	}
 

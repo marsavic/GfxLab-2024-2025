@@ -17,9 +17,9 @@ public class SceneTest1 extends Scene.Base {
 	
 	public SceneTest1() {
 		Ball ball = Ball.cr(Vec3.xyz(0, 0, 4), 2,
-				uv -> Numeric.mod(uv.dot(Vector.xy(5, 4))) < 0.2 ?
+				uv -> (Numeric.mod(uv.dot(Vector.xy(5, 4))) < 0.2 ?
 						Material.matte(Color.okhcl(uv.y(), 0.125, 0.75)) :
-						Material.matte(0.1)
+						Material.matte(0.1)).specular(Color.WHITE).shininess(32)
 		);
 		
 		HalfSpace halfSpace = HalfSpace.pn(Vec3.xyz(0, -2, 0), Vec3.EY,
@@ -29,8 +29,9 @@ public class SceneTest1 extends Scene.Base {
 		solid = Group.of(ball, halfSpace);
 		
 		Collections.addAll(lights(),
-				Light.pc(Vec3.xyz(-3, 3, 2), Color.hsb(0, 0.5, 3)),
-				Light.pc(Vec3.xyz(0, 0, 0), Color.gray(0.1))
+				Light.pc(Vec3.xyz(-3, 3, 2), Color.hsb(0, 0.5, 10)),
+				Light.pc(Vec3.xyz(0, 0, 0), Color.gray(0.5)),
+				Light.pc(Vec3.xyz(5, 5, 8), Color.gray(10))
 		);
 	}
 }
