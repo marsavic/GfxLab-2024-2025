@@ -11,8 +11,8 @@ import xyz.marsavic.gfxlab.tonemapping.ColorTransform;
 // TODO
 public class AutoSoft implements F1<ColorTransform, Matrix<Color>> {
 	
-	public double preFactor = 0x1p-4;
-	public double power = 1.0;
+	public double preFactor;
+	public double power;
 	public double postFactor = 1.0;
 	public boolean autoPostFactor = true;
 	
@@ -20,6 +20,11 @@ public class AutoSoft implements F1<ColorTransform, Matrix<Color>> {
 	public AutoSoft(double preFactor, double power) {
 		this.preFactor = preFactor;
 		this.power = power;
+	}
+
+	
+	public AutoSoft() {
+		this(0x1p-4, 1.0);
 	}
 	
 	
