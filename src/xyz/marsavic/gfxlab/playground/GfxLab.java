@@ -7,6 +7,7 @@ import xyz.marsavic.gfxlab.aggregation.AggregatorFrameLast;
 import xyz.marsavic.gfxlab.aggregation.EAggregator;
 import xyz.marsavic.gfxlab.Affine;
 import xyz.marsavic.gfxlab.graphics3d.cameras.Perspective;
+import xyz.marsavic.gfxlab.graphics3d.cameras.ThinLensFOV;
 import xyz.marsavic.gfxlab.graphics3d.cameras.TransformedCamera;
 import xyz.marsavic.gfxlab.graphics3d.raytracers.PathTracer;
 import xyz.marsavic.gfxlab.graphics3d.raytracers.RayTracerSimple;
@@ -32,11 +33,21 @@ public class GfxLab {
 						new EAggregator(
 								e(AggregatorFrameLast::new),
 								e(Fs::transformedColorFunction,
-/*
-										e(Pathtracer::new,
+										e(RayTracerSimple::new, // Shadows are currently turned off to simplify rendering of SDF solids.
+												e(TestSDF::new),
+												e(TransformedCamera::new,
+														e(Perspective::new, e(2)),
+														e(Affine.IDENTITY
+																.then(Affine.translation(Vec3.xyz(0, 0, -3)))
+														)
+												)
+										),
+
+										/*
+										e(PathTracer::new,
 												e(CityOfNight::new, e(50), e(0x3B660712F3CFA050L)),
 												e(TransformedCamera::new,
-														e(ThinLensFOV::new, e(1.0/3), e(7.0), e(0.1)),
+														e(ThinLensFOV::new, e(3.0), e(7.0), e(0.1)),
 														e(Affine.IDENTITY
 																.then(Affine.translation(Vec3.xyz(0, 0, -7)))
 																.then(Affine.rotationAboutX(0.12))
@@ -45,16 +56,6 @@ public class GfxLab {
 												)
 										),
 */
-										e(PathTracer::new,
-												e(ChristmasTree::new),
-												e(TransformedCamera::new,
-														e(Perspective::new, e(2)),
-														e(Affine.IDENTITY
-																.then(Affine.rotationAboutX(0))
-																.then(Affine.translation(Vec3.xyz(0, 8, -28)))
-														)
-												)
-										),
 										e(TransformationsFromSize.toGeometric, eSize)
 								),
 								eSize,
