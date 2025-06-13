@@ -9,17 +9,13 @@ import xyz.marsavic.gfxlab.aggregation.EAggregator;
 import xyz.marsavic.gfxlab.graphics3d.cameras.Perspective;
 import xyz.marsavic.gfxlab.graphics3d.cameras.TransformedCamera;
 import xyz.marsavic.gfxlab.graphics3d.raytracers.RayTracerSimple;
-import xyz.marsavic.gfxlab.graphics3d.scenes.DiscoRoom;
-import xyz.marsavic.gfxlab.graphics3d.scenes.Mirrors;
-import xyz.marsavic.gfxlab.graphics3d.scenes.SceneTest1;
+import xyz.marsavic.gfxlab.graphics3d.scenes.*;
 import xyz.marsavic.gfxlab.gui.UtilsGL;
 import xyz.marsavic.gfxlab.playground.colorfunctions.Blobs;
 import xyz.marsavic.gfxlab.tonemapping.ColorTransform;
 import xyz.marsavic.gfxlab.tonemapping.colortransforms.Identity;
 import xyz.marsavic.gfxlab.tonemapping.matrixcolor_to_colortransforms.AutoSoft;
 import xyz.marsavic.resources.Resource;
-
-import javax.xml.transform.TransformerConfigurationException;
 
 import static xyz.marsavic.elements.ElementF.e;
 
@@ -45,13 +41,13 @@ public class GfxLab {
 								e(AggregatorFrameLast::new),
 								e(Fs::transformedColorFunction,
 										e(RayTracerSimple::new,
-												e(Mirrors::new, e(3)),
+												e(GoldTrinket::new),
 												e(TransformedCamera::new,
-													e(Perspective::fov, e(0.125)),
-													e(Affine.IDENTITY
+														e(Perspective::new, e(2)),
+														e(Affine.IDENTITY
 															.then(Affine.translation(Vec3.xyz(0, 0, -3)))
-															.then(Affine.rotationAboutY(0.05))
-													)
+//															.then(Affine.rotationAboutY(0.04))
+														)
 												)
 										),
 										e(TransformationsFromSize.toGeometric, eSize)

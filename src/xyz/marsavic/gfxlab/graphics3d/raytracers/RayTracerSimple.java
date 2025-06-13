@@ -70,6 +70,11 @@ public class RayTracerSimple extends RayTracer {
 			result = result.add(lightReflective.mul(material.reflective()));
 		}
 		
+		if (material.refractive().notZero()) {   // When material has refractive properties, we recursively find the color visible along the ray (p, f).
+			Vec3 f = GeometryUtils.refractedNN(n_, i_, material.refractiveIndex());
+			result = result.add(sample(Ray.pd(p, f), depthRemaining - 1)).mul(material.refractive());
+		}
+		
 		return result;
 	}
 }

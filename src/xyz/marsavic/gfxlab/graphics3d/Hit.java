@@ -38,6 +38,16 @@ public interface Hit {
 		};
 	}
 	
+	default Hit withMaterial(Material material) {
+		return new Hit() {
+			@Override public double   t       () { return Hit.this.t(); }
+			@Override public Vec3     n       () { return Hit.this.n(); }
+			@Override public Vec3     n_      () { return Hit.this.n_(); }
+			@Override public Material material() { return material; }
+			@Override public Vector   uv      () { return Hit.this.uv(); }
+		};
+	}
+	
 	default Hit inverted() {
 		return new Hit() {
 			@Override public double   t       () { return Hit.this.t (); }

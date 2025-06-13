@@ -12,8 +12,8 @@ public record Material (
 		Color reflective,
 		Color refractive,
 		double refractiveIndex
-) implements F1<Material, Vector>  {
-	public static final Material BLACK = new Material(Color.BLACK, Color.BLACK, 0.0, Color.BLACK, Color.BLACK, 1.4);
+) implements F1<Material, Vector> {
+	public static final Material BLACK   = new Material(Color.BLACK, Color.BLACK, 32, Color.BLACK, Color.BLACK, 1.5);
 	
 	public Material diffuse        (Color  diffuse        ) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex); }
 	public Material specular       (Color  specular       ) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex); }
